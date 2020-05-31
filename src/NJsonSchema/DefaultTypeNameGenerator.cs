@@ -35,13 +35,13 @@ namespace NJsonSchema
             }
 
             typeNameHint = (typeNameHint ?? "")
-                .Replace("[", " Of ")
-                .Replace("]", " ")
-                .Replace("<", " Of ")
-                .Replace(">", " ")
-                .Replace(",", " And ")
+                .Replace("[", "<")
+                .Replace("]", ">")
+                //.Replace("<", " Of ")
+                //.Replace(">", " ")
+                //.Replace(",", " And ")
                 .Replace("  ", " ");
-
+                
             var parts = typeNameHint.Split(' ');
             typeNameHint = string.Join(string.Empty, parts.Select(p => Generate(schema, p)));
 
@@ -64,9 +64,10 @@ namespace NJsonSchema
             {
                 typeNameHint = schema.Title;
             }
-
-            var lastSegment = typeNameHint?.Split('.').Last();
-            return ConversionUtilities.ConvertToUpperCamelCase(lastSegment ?? "Anonymous", true);
+            
+            return typeNameHint;
+            //var lastSegment = typeNameHint?.Split('.').Last();
+            //return ConversionUtilities.ConvertToUpperCamelCase(lastSegment ?? "Anonymous", true);
         }
 
         private string GenerateAnonymousTypeName(string typeNameHint, IEnumerable<string> reservedTypeNames)
